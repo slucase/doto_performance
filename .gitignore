@@ -1,0 +1,6 @@
+#Credentials file
+auth.py
+
+#Dados processados
+*.json
+*.db
