@@ -1,16 +1,27 @@
 #!/usr/bin/python
 import dota2api
-import psycopg2
-import auth
+import json
+import my_auth
+from collections import namedtuple
 
-user_id = auth.user_id "76561198043845061"
-api_key = auth.api_key "0A73920A08DA99E72C610B005860B22D"
+user_id = my_auth.user_id
+api_key = my_auth.api_key
 
 api = dota2api.Initialise(api_key)
-history_request = api.get_match_history(account_id=user_id)
+history = api.get_match_history(account_id=user_id)
 
-my_matches = history_request['matches'][1]['match_id']
+#Loop for getting the matches ids
+my_matches = []
+n_results = history['num_results']
 
-conn = psycopg2.connect(host="localhost", database="doto2", user="postgress", password="dbpass2")
+for i in range(n_results):
+   my_matches.append(history['matches'][i]['match_id'])
 
-print(my_matches)
+#Loop for getting the friends and nemesis data
+for i in range(n_results):
+   m = api.get_match_details(match_id = my_matches[i])
+   player[i] = m['players'][i]['player_slot']
+   print(player)
+
+#print(api.get_heroes())
+#print(my_matches)
