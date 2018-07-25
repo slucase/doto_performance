@@ -26,9 +26,13 @@ for i in range(n_results):
 
 try:
    with connection.cursor() as cursor:
-      #Create table
-      sql = "CREATE TABLE ( player int, hero int)"
-      cursor.execute(sql)
+      #Default SQL Commands
+      sqlUseDb = "use doto"
+      sqlCreatetTable = "CREATE TABLE test(Player int, Hero int)"
+      
+      cursor.execute(sqlUseDb)
+      cursor.execute(sqlCreatetTable)
+   
    connection.commit()
 finally:
    connection.close()
